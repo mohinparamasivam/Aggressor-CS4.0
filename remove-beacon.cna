@@ -1,0 +1,9 @@
+alias bye {
+	binput($1, "exit");
+	bexit($1);
+	on beacon_checkin{
+
+		beacon_remove($1);
+	}
+
+}
