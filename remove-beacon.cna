@@ -19,7 +19,7 @@ alias bye {
 
 		if ($output eq "beacon exit.") {
 			beacon_remove($1);
-			blog($bid,"beacon removed from table.");
+			blog($bid,"beacon removed from display.");
 			local ('$username $hostname $pid $ip');
 
 			$username = binfo($bid,'user');
@@ -28,11 +28,11 @@ alias bye {
 			$ip = binfo($bid,'host');
 			$operator = mynick();
 
-# Beacon ID is reset to none since there's a bug that loops the output. Output is produced in the Event Log.
+# Beacon ID is reset to none since there's an unknown bug that loops the output. Output is produced in the Event Log.
 
 			$bid = '';
 			if ($pid !eq ''){
-				$message = "\c7 $operator killed beacon from \o \c4".$username."@".$ip."(".$hostname.")"."["."PID: $pid"."]\o";
+				$message = "\c7 $operator killed beacon from \o \c4".$username."@".$ip." (".$hostname.")"."["."PID: $pid"."]\o";
 				elog($message);
 
 			}
