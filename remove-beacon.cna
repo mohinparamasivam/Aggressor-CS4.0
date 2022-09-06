@@ -1,11 +1,10 @@
-# 
+
 # Exits and Removes Beacon from Session Table using commandline.
 
 # Author:
 #   Mohin Paramasivam / Shad0wQu35t
 #   <mohin2099@gmail.com>
 #   (https://github.com/mohinparamasivam)
-#
 
 
 alias bye {
