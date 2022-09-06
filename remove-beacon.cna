@@ -1,9 +1,44 @@
+# 
+# Exits and Removes Beacon from Session Table using commandline.
+
+# Author:
+#   Mohin Paramasivam / Shad0wQu35t
+#   <mohin2099@gmail.com>
+#   (https://github.com/mohinparamasivam)
+#
+
+
 alias bye {
-	binput($1, "exit");
-	bexit($1);
-	on beacon_checkin{
+	$bid = $1;
+	binput($bid, "exit");
+	bexit($bid);
+	on beacon_output {
+		$output = $2;
 
-		beacon_remove($1);
+#Checks whether the beacon has produced output for the exit task and is removed from the Session Table.
+
+		if ($output eq "beacon exit.") {
+			beacon_remove($1);
+			blog($bid,"beacon removed from table.");
+			local ('$username $hostname $pid $ip');
+
+			$username = binfo($bid,'user');
+			$hostname = binfo($bid,'computer');
+			$pid = binfo($bid,'pid');
+			$ip = binfo($bid,'host');
+			$operator = mynick();
+
+# Beacon ID is reset to none since there's a bug that loops the output. Output is produced in the Event Log.
+
+			$bid = '';
+			if ($pid !eq ''){
+				$message = "\c7 $operator killed beacon from \o \c4".$username."@".$ip."(".$hostname.")"."["."PID: $pid"."]\o";
+				elog($message);
+
+			}
+			
+		}
 	}
-
 }
+
+
