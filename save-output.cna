@@ -1,0 +1,57 @@
+# 
+# Saves long command output to a file.
+
+# Author:
+#   Mohin Paramasivam / Shad0wQu35t
+#   <mohin2099@gmail.com>
+#   (https://github.com/mohinparamasivam)
+#
+
+
+sub execute-assembly{
+	$bid = $1;
+	$binarypath = $2;
+	$arguments = $3;
+
+	bexecute_assembly($bid,$binarypath,$arguments);
+
+	on beacon_tasked {
+
+		$tasktxt = $2;
+
+		$task_check = substr($tasktxt,21,25);
+
+		on beacon_output{
+			$output = $2;
+
+			if($task_check eq ".NET"){
+				local ('$pid');
+				$pid = binfo($bid,'pid');
+
+			# Beacon ID is reset to none since there's an unknown bug that loops the output. Output is produced in the Event Log.
+				$bid = '';
+
+				if ($pid !eq ''){
+					elog($output);
+
+				}
+			}
+		}
+	}
+}
+
+
+
+alias saveoutput {
+
+	$bid = $1;
+	$file = $2;
+	$module = $3;
+	$command = $4;
+	$optional_arguments = $5;
+
+	execute-assembly($bid,$command,$optional_arguments);
+
+	
+
+}
