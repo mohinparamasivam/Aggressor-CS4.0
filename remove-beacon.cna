@@ -42,3 +42,12 @@ alias bye {
 }
 
 
+beacon_command_register(
+	"bye",
+	"exits and removes beacon from display",
+	"\nDescription : \n\nExit Session and Remove from Display"
+	);
+
+
+
+
