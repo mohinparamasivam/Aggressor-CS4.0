@@ -207,52 +207,6 @@ sub powerpick{
 
 
 
-sub mimikatz{
-	$bid = $1;
-	$command = $2;
-	$arguments = $3;
-
-	$final_command = $command." ".$arguments;
-	$print_command = "mimikatz ".$final_command;
-
-	binput($bid,$print_command);
-	bmimikatz($bid,$final_command);
-
-	
-
-	on beacon_tasked {
-
-		$tasktxt = $2;
-
-		$task_check = substr($tasktxt,21,31);
-
-		on beacon_output{
-			$output = $2;
-
-			if($task_check eq "mimikatz's"){
-				local ('$pid');
-				$pid = binfo($bid,'pid');
-
-			# Beacon ID is reset to none since there's an unknown bug that loops the output. Output is produced in the Event Log.
-				$bid = '';
-
-				if ($pid !eq ''){
-					elog($output);
-
-				}
-			}
-		}
-	}
-}
-
-
-
-
-
-
-
-
-
 
 alias saveoutput {
 
@@ -282,7 +236,4 @@ alias saveoutput {
 		powershell($bid,$command,$optional_arguments);
 	}
 
-	if ($module eq "mimikatz"){
-		mimikatz($bid,$command,$optional_arguments);
-	}
 }
