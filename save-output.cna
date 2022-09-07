@@ -10,12 +10,14 @@
 
 sub execute-assembly{
 	$bid = $1;
-	$binarypath = $2;
-	$arguments = $3;
+	$file = $2;
+	$binarypath = $3;
+	$arguments = $4;
 	
 	$print_command = "execute-assembly ".$binarypath." ".$arguments;
 
 	binput($bid,$print_command);
+	btask($1, "Saving output to $file");
 	bexecute_assembly($bid,$binarypath,$arguments);
 
 	on beacon_tasked {
@@ -47,13 +49,15 @@ sub execute-assembly{
 
 sub run{
 	$bid = $1;
-	$command = $2;
-	$arguments = $3;
+	$file = $2;
+	$command = $3;
+	$arguments = $4;
 
 	$final_command = $command." ".$arguments;
 	$print_command = "run ".$final_command;
-
+	
 	binput($bid,$print_command);
+	btask($1, "Saving output to $file");
 	brun($bid,$final_command);
 
 	
@@ -90,13 +94,15 @@ sub run{
 
 sub shell{
 	$bid = $1;
-	$command = $2;
-	$arguments = $3;
+	$file = $2;
+	$command = $3;
+	$arguments = $4;
 
 	$final_command = $command." ".$arguments;
 	$print_command = "shell ".$final_command;
 
 	binput($bid,$print_command);
+	btask($1, "Saving output to $file");
 	bshell($bid,$final_command);
 
 	
@@ -129,13 +135,15 @@ sub shell{
 
 sub powershell{
 	$bid = $1;
-	$command = $2;
-	$arguments = $3;
+	$file = $2;
+	$command = $3;
+	$arguments = $4;
 
 	$final_command = $command." ".$arguments;
 	$print_command = "powershell ".$final_command;
 
 	binput($bid,$print_command);
+	btask($1, "Saving output to $file");
 	bpowershell($bid,$final_command);
 
 	
@@ -169,13 +177,15 @@ sub powershell{
 
 sub powerpick{
 	$bid = $1;
-	$command = $2;
-	$arguments = $3;
+	$file = $2;
+	$command = $3;
+	$arguments = $4;
 
 	$final_command = $command." ".$arguments;
 	$print_command = "powerpick ".$final_command;
 
 	binput($bid,$print_command);
+	btask($1, "Saving output to $file");
 	bpowerpick($bid,$final_command);
 
 	
@@ -217,23 +227,23 @@ alias saveoutput {
 	$optional_arguments = $5;
 
 	if ($module eq "execute-assembly"){
-		execute-assembly($bid,$command,$optional_arguments);
+		execute-assembly($bid,$file,$command,$optional_arguments);
 	}
 
 	if ($module eq "run"){
-		run($bid,$command,$optional_arguments);
+		run($bid,$file,$command,$optional_arguments);
 	}
 
 	if ($module eq "shell"){
-		shell($bid,$command,$optional_arguments);
+		shell($bid,$file,$command,$optional_arguments);
 	}
 
 	if ($module eq "powerpick"){
-		powerpick($bid,$command,$optional_arguments);
+		powerpick($bid,$file,$command,$optional_arguments);
 	}
 
 	if ($module eq "powershell"){
-		powershell($bid,$command,$optional_arguments);
+		powershell($bid,$file,$command,$optional_arguments);
 	}
 
 }
