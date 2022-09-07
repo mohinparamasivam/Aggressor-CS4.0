@@ -12,7 +12,10 @@ sub execute-assembly{
 	$bid = $1;
 	$binarypath = $2;
 	$arguments = $3;
+	
+	$print_command = "execute-assembly ".$binarypath." ".$arguments;
 
+	binput($bid,$print_command);
 	bexecute_assembly($bid,$binarypath,$arguments);
 
 	on beacon_tasked {
@@ -48,8 +51,132 @@ sub run{
 	$arguments = $3;
 
 	$final_command = $command." ".$arguments;
-	binput($bid,$final_command);
+	$print_command = "run ".$final_command;
+
+	binput($bid,$print_command);
 	brun($bid,$final_command);
+
+	
+
+	on beacon_tasked {
+
+		$tasktxt = $2;
+
+		$task_check = substr($tasktxt,17,21);
+
+		on beacon_output{
+			$output = $2;
+
+
+			if($task_check eq "run:"){
+				local ('$pid');
+				$pid = binfo($bid,'pid');
+
+
+			# Beacon ID is reset to none since there's an unknown bug that loops the output. Output is produced in the Event Log.
+				$bid = '';
+
+
+				if ($pid !eq ''){
+					elog($output);
+
+
+				}
+			}
+		}
+	}
+}
+
+
+sub shell{
+	$bid = $1;
+	$command = $2;
+	$arguments = $3;
+
+	$final_command = $command." ".$arguments;
+	$print_command = "shell ".$final_command;
+
+	binput($bid,$print_command);
+	bshell($bid,$final_command);
+
+	
+
+	on beacon_tasked {
+
+		$tasktxt = $2;
+
+		$task_check = substr($tasktxt,17,21);
+
+		on beacon_output{
+			$output = $2;
+
+			if($task_check eq "run:"){
+				local ('$pid');
+				$pid = binfo($bid,'pid');
+
+			# Beacon ID is reset to none since there's an unknown bug that loops the output. Output is produced in the Event Log.
+				$bid = '';
+
+				if ($pid !eq ''){
+					elog($output);
+
+				}
+			}
+		}
+	}
+}
+
+
+sub powershell{
+	$bid = $1;
+	$command = $2;
+	$arguments = $3;
+
+	$final_command = $command." ".$arguments;
+	$print_command = "powershell ".$final_command;
+
+	binput($bid,$print_command);
+	bpowershell($bid,$final_command);
+
+	
+
+	on beacon_tasked {
+
+		$tasktxt = $2;
+
+		$task_check = substr($tasktxt,17,21);
+
+		on beacon_output{
+			$output = $2;
+
+			if($task_check eq "run:"){
+				local ('$pid');
+				$pid = binfo($bid,'pid');
+
+			# Beacon ID is reset to none since there's an unknown bug that loops the output. Output is produced in the Event Log.
+				$bid = '';
+
+				if ($pid !eq ''){
+					elog($output);
+
+				}
+			}
+		}
+	}
+}
+
+
+
+sub powerpick{
+	$bid = $1;
+	$command = $2;
+	$arguments = $3;
+
+	$final_command = $command." ".$arguments;
+	$print_command = "powerpick ".$final_command;
+
+	binput($bid,$print_command);
+	bpowerpick($bid,$final_command);
 
 	
 
@@ -85,6 +212,8 @@ sub run{
 
 
 
+
+
 alias saveoutput {
 
 	$bid = $1;
@@ -99,6 +228,19 @@ alias saveoutput {
 
 	if ($module eq "run"){
 		run($bid,$command,$optional_arguments);
+	}
+
+	if ($module eq "shell"){
+		shell($bid,$command,$optional_arguments);
+	}
+
+
+	if ($module eq "powerpick"){
+		powerpick($bid,$command,$optional_arguments);
+	}
+
+	if ($module eq "powershell"){
+		powershell($bid,$command,$optional_arguments);
 	}
 
 }
