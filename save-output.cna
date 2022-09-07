@@ -285,5 +285,4 @@ alias saveoutput {
 	if ($module eq "mimikatz"){
 		mimikatz($bid,$command,$optional_arguments);
 	}
-/user:lillian.morissa"
 }
