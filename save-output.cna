@@ -42,6 +42,49 @@ sub execute-assembly{
 
 
 
+sub run{
+	$bid = $1;
+	$command = $2;
+	$arguments = $3;
+
+	$final_command = $command." ".$arguments;
+	binput($bid,$final_command);
+	brun($bid,$final_command);
+
+	
+
+	on beacon_tasked {
+
+		$tasktxt = $2;
+
+		$task_check = substr($tasktxt,17,21);
+
+		on beacon_output{
+			$output = $2;
+
+			if($task_check eq "run:"){
+				local ('$pid');
+				$pid = binfo($bid,'pid');
+
+			# Beacon ID is reset to none since there's an unknown bug that loops the output. Output is produced in the Event Log.
+				$bid = '';
+
+				if ($pid !eq ''){
+					elog($output);
+
+				}
+			}
+		}
+	}
+}
+
+
+
+
+
+
+
+
 alias saveoutput {
 
 	$bid = $1;
@@ -50,8 +93,12 @@ alias saveoutput {
 	$command = $4;
 	$optional_arguments = $5;
 
-	execute-assembly($bid,$command,$optional_arguments);
+	if ($module eq "execute-assembly"){
+		execute-assembly($bid,$command,$optional_arguments);
+	}
 
-	
+	if ($module eq "run"){
+		run($bid,$command,$optional_arguments);
+	}
 
 }
