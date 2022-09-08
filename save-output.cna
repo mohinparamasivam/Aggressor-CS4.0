@@ -20,30 +20,22 @@ sub execute-assembly{
 	btask($1, "Saving output to $file");
 	bexecute_assembly($bid,$binarypath,$arguments);
 
-	on beacon_tasked {
+	
+	on beacon_output{
+		$output = $2;
+		$output_check = substr($output,0,16);
+		
+		if ($output_check eq "received output:"){
+			elog($output);
+			$fileopen = openf(">>$file");
+			writeb($fileopen, $output);
+			closef($fileopen);
 
-		$tasktxt = $2;
-
-		$task_check = substr($tasktxt,21,25);
-
-		on beacon_output{
-			$output = $2;
-
-			if($task_check eq ".NET"){
-				local ('$pid');
-				$pid = binfo($bid,'pid');
-
-			# Beacon ID is reset to none since there's an unknown bug that loops the output. Output is produced in the Event Log.
-				$bid = '';
-
-				if ($pid !eq ''){
-					elog($output);
-
-				}
-			}
 		}
 	}
 }
+				
+
 
 
 
@@ -61,31 +53,17 @@ sub run{
 	brun($bid,$final_command);
 
 	
-	on beacon_tasked {
+	
+	on beacon_output{
+		$output = $2;
+		$output_check = substr($output,0,16);
+		
+		if ($output_check eq "received output:"){
+			elog($output);
+			$fileopen = openf(">>$file");
+			writeb($fileopen, $output);
+			closef($fileopen);
 
-		$tasktxt = $2;
-
-		$task_check = substr($tasktxt,17,21);
-
-		on beacon_output{
-			$output = $2;
-
-
-			if($task_check eq "run:"){
-				local ('$pid');
-				$pid = binfo($bid,'pid');
-
-
-			# Beacon ID is reset to none since there's an unknown bug that loops the output. Output is produced in the Event Log.
-				$bid = '';
-
-
-				if ($pid !eq ''){
-					elog($output);
-
-
-				}
-			}
 		}
 	}
 }
@@ -106,30 +84,22 @@ sub shell{
 
 	
 
-	on beacon_tasked {
+	
+	on beacon_output{
+		$output = $2;
+		$output_check = substr($output,0,16);
+		
+		if ($output_check eq "received output:"){
+			elog($output);
+			$fileopen = openf(">>$file");
+			writeb($fileopen, $output);
+			closef($fileopen);
 
-		$tasktxt = $2;
-
-		$task_check = substr($tasktxt,17,21);
-
-		on beacon_output{
-			$output = $2;
-
-			if($task_check eq "run:"){
-				local ('$pid');
-				$pid = binfo($bid,'pid');
-
-			# Beacon ID is reset to none since there's an unknown bug that loops the output. Output is produced in the Event Log.
-				$bid = '';
-
-				if ($pid !eq ''){
-					elog($output);
-
-				}
-			}
 		}
 	}
 }
+				
+				
 
 
 sub powershell{
@@ -147,30 +117,21 @@ sub powershell{
 
 	
 
-	on beacon_tasked {
+	
+	on beacon_output{
+		$output = $2;
+		$output_check = substr($output,0,16);
+		
+		if ($output_check eq "received output:"){
+			elog($output);
+			$fileopen = openf(">>$file");
+			writeb($fileopen, $output);
+			closef($fileopen);
 
-		$tasktxt = $2;
-
-		$task_check = substr($tasktxt,17,21);
-
-		on beacon_output{
-			$output = $2;
-
-			if($task_check eq "run:"){
-				local ('$pid');
-				$pid = binfo($bid,'pid');
-
-			# Beacon ID is reset to none since there's an unknown bug that loops the output. Output is produced in the Event Log.
-				$bid = '';
-
-				if ($pid !eq ''){
-					elog($output);
-
-				}
-			}
 		}
 	}
 }
+				
 
 
 
@@ -189,30 +150,21 @@ sub powerpick{
 
 	
 
-	on beacon_tasked {
+	
+	on beacon_output{
+		$output = $2;
+		$output_check = substr($output,0,16);
+		
+		if ($output_check eq "received output:"){
+			elog($output);
+			$fileopen = openf(">>$file");
+			writeb($fileopen, $output);
+			closef($fileopen);
 
-		$tasktxt = $2;
-
-		$task_check = substr($tasktxt,17,21);
-
-		on beacon_output{
-			$output = $2;
-
-			if($task_check eq "run:"){
-				local ('$pid');
-				$pid = binfo($bid,'pid');
-
-			# Beacon ID is reset to none since there's an unknown bug that loops the output. Output is produced in the Event Log.
-				$bid = '';
-
-				if ($pid !eq ''){
-					elog($output);
-
-				}
-			}
 		}
 	}
 }
+				
 
 
 
@@ -244,7 +196,7 @@ alias saveoutput {
 
 		if (!-exists $filepath){
 			createNewFile($filepath);
-			execute-assembly($bid,$file,$command,$optional_arguments);
+			execute-assembly($bid,$filepath,$command,$optional_arguments);
 		}
 
 
