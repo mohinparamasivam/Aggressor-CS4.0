@@ -61,7 +61,6 @@ sub run{
 	brun($bid,$final_command);
 
 	
-
 	on beacon_tasked {
 
 		$tasktxt = $2;
@@ -227,23 +226,131 @@ alias saveoutput {
 	$optional_arguments = $5;
 
 	if ($module eq "execute-assembly"){
-		execute-assembly($bid,$file,$command,$optional_arguments);
+
+		if (!-exists "saveoutput/"){
+			mkdir("saveoutput");
+		}
+
+		$currentdir = cwd();
+		$filepath = $currentdir."/saveoutput/".$file;
+		elog($filepath);
+		
+
+		if (-exists $filepath){
+			berror($1,"File Exists! Use another filename.");
+			
+		}
+
+
+		if (!-exists $filepath){
+			createNewFile($filepath);
+			execute-assembly($bid,$file,$command,$optional_arguments);
+		}
+
+
+		
 	}
 
 	if ($module eq "run"){
-		run($bid,$file,$command,$optional_arguments);
+		if (!-exists "saveoutput/"){
+			mkdir("saveoutput");
+		}
+
+
+		$currentdir = cwd();
+		$filepath = $currentdir."/saveoutput/".$file;
+		elog($filepath);
+
+		if (-exists $filepath){
+			berror($1,"File Exists! Use another filename.");
+			
+		}
+
+
+		if (!-exists $filepath){
+			createNewFile($filepath);
+			run($bid,$filepath,$command,$optional_arguments);
+		}
+	
 	}
 
 	if ($module eq "shell"){
-		shell($bid,$file,$command,$optional_arguments);
+
+		if (!-exists "saveoutput/"){
+			mkdir("saveoutput");
+		}
+
+		$currentdir = cwd();
+		$filepath = $currentdir."/saveoutput/".$file;
+		elog($filepath);
+		
+
+
+		if (-exists $filepath){
+			berror($1,"File Exists! Use another filename.");
+			
+		}
+
+
+		if (!-exists $filepath){
+			createNewFile($filepath);
+			shell($bid,$filepath,$command,$optional_arguments);
+		}
+
+		
 	}
 
 	if ($module eq "powerpick"){
-		powerpick($bid,$file,$command,$optional_arguments);
+
+		if (!-exists "saveoutput/"){
+			mkdir("saveoutput");
+		}
+
+		$currentdir = cwd();
+		$filepath = $currentdir."/saveoutput/".$file;
+		elog($filepath);
+		
+
+
+		if (-exists $filepath){
+			berror($1,"File Exists! Use another filename.");
+			
+		}
+
+
+		if (!-exists $filepath){
+			createNewFile($filepath);
+			powerpick($bid,$filepath,$command,$optional_arguments);
+		}
+
+
+		
 	}
 
 	if ($module eq "powershell"){
-		powershell($bid,$file,$command,$optional_arguments);
+
+		if (!-exists "saveoutput/"){
+			mkdir("saveoutput");
+		}
+
+		$currentdir = cwd();
+		$filepath = $currentdir."/saveoutput/".$file;
+		elog($filepath);
+		
+
+
+		if (-exists $filepath){
+			berror($1,"File Exists! Use another filename.");
+			
+		}
+
+
+		if (!-exists $filepath){
+			createNewFile($filepath);
+			powershell($bid,$filepath,$command,$optional_arguments);
+		}
+
+		
 	}
 
 }
@@ -252,4 +359,4 @@ alias saveoutput {
 beacon_command_register(
    "saveoutput", 
    "saves command output to file", 
-   "\nSupported Modules : (execute-assembly,run,shell,powerpick,powershell)\n\nUsage : saveoutput filename module command optional_arguments\n\nExamples : \n\nsaveoutput seatbelt_output.txt execute-assembly /opt/Seatbelt.exe \"-group=system\"\nsaveoutput netstat.log run net \"localgroup Administrators\"\nsaveoutput process_list.txt shell whoami \"/all\"\nsaveoutput usernames.txt powerpick Get-NetUser\nsaveoutput jaws.txt powershell C:\\Tools\\JAWS.ps1\n");
+   "\nSupported Modules : (execute-assembly,run,shell,powerpick,powershell)\n\nUsage : saveoutput filename module command optional_arguments\n\nExamples : \n\nsaveoutput seatbelt_output.txt execute-assembly /opt/Seatbelt.exe \"-group=system\"\nsaveoutput netstat.log run net \"localgroup Administrators\"\nsaveoutput process_list.txt shell whoami \"/all\"\nsaveoutput usernames.txt powerpick Get-DomainUser\nsaveoutput jaws.txt powershell C:\\Tools\\JAWS.ps1\n");
