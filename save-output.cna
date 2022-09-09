@@ -1,5 +1,5 @@
 # 
-# Saves long command output to a file.
+# Exits and Removes Beacon from Session Table using commandline.
 
 # Author:
 #   Mohin Paramasivam / Shad0wQu35t
@@ -8,339 +8,46 @@
 #
 
 
-sub execute-assembly{
+alias bye {
 	$bid = $1;
-	$file = $2;
-	$binarypath = $3;
-	$arguments = $4;
-	
-	$print_command = "execute-assembly ".$binarypath." ".$arguments;
-
-	binput($bid,$print_command);
-	btask($1, "Saving output to $file");
-	bexecute_assembly($bid,$binarypath,$arguments);
-
-	
-	on beacon_output{
+	binput($bid, "exit");
+	bexit($bid);
+	on beacon_output {
 		$output = $2;
-		$output_check = substr($output,0,16);
-		
-		if ($output_check eq "received output:"){
-			elog($output);
-			$fileopen = openf(">>$file");
-			writeb($fileopen, $output);
-			closef($fileopen);
 
-		}
-	}
-}
-				
+#Checks whether the beacon has produced output for the exit task and is removed from the Session Table.
 
+		if ($output eq "beacon exit.") {
+			beacon_remove($1);
+			blog($bid,"beacon removed from display.");
+			local ('$username $hostname $pid $ip');
 
+			$username = binfo($bid,'user');
+			$hostname = binfo($bid,'computer');
+			$pid = binfo($bid,'pid');
+			$ip = binfo($bid,'host');
+			$operator = mynick();
 
+# Beacon ID is reset to none since there's an unknown bug that loops the output. Output is produced in the Event Log.
 
-sub run{
-	$bid = $1;
-	$file = $2;
-	$command = $3;
-	$arguments = $4;
+			$bid = '';
+			if ($pid !eq ''){
+				$message = "\c7 $operator killed beacon from \o \c4".$username."@".$ip." (".$hostname.")"."["."PID: $pid"."]\o";
+				elog($message);
 
-	$final_command = $command." ".$arguments;
-	$print_command = "run ".$final_command;
-	
-	binput($bid,$print_command);
-	btask($1, "Saving output to $file");
-	brun($bid,$final_command);
-
-	
-	
-	on beacon_output{
-		$output = $2;
-		$output_check = substr($output,0,16);
-		
-		if ($output_check eq "received output:"){
-			elog($output);
-			$fileopen = openf(">>$file");
-			writeb($fileopen, $output);
-			closef($fileopen);
-
-		}
-	}		
-}
-
-
-sub shell{
-	$bid = $1;
-	$file = $2;
-	$command = $3;
-	$arguments = $4;
-
-	$final_command = $command." ".$arguments;
-	$print_command = "shell ".$final_command;
-
-	binput($bid,$print_command);
-	btask($1, "Saving output to $file");
-	bshell($bid,$final_command);
-
-	
-
-	
-	on beacon_output{
-		$output = $2;
-		$output_check = substr($output,0,16);
-		
-		if ($output_check eq "received output:"){
-			elog($output);
-			$fileopen = openf(">>$file");
-			writeb($fileopen, $output);
-			closef($fileopen);
-
-		}
-	}
-}
-				
-				
-
-
-sub powershell{
-	$bid = $1;
-	$file = $2;
-	$command = $3;
-	$arguments = $4;
-
-	$final_command = $command." ".$arguments;
-	$print_command = "powershell ".$final_command;
-
-	binput($bid,$print_command);
-	btask($1, "Saving output to $file");
-	bpowershell($bid,$final_command);
-
-	
-
-	
-	on beacon_output{
-		$output = $2;
-		$output_check = substr($output,0,16);
-		
-		if ($output_check eq "received output:"){
-			elog($output);
-			$fileopen = openf(">>$file");
-			writeb($fileopen, $output);
-			closef($fileopen);
-
-		}
-	}
-}
-				
-
-
-
-sub powerpick{
-	$bid = $1;
-	$file = $2;
-	$command = $3;
-	$arguments = $4;
-
-	$final_command = $command." ".$arguments;
-	$print_command = "powerpick ".$final_command;
-
-	binput($bid,$print_command);
-	btask($1, "Saving output to $file");
-	bpowerpick($bid,$final_command);
-
-	
-
-	
-	on beacon_output{
-		$output = $2;
-		$output_check = substr($output,0,16);
-		
-		if ($output_check eq "received output:"){
-			elog($output);
-			$fileopen = openf(">>$file");
-			writeb($fileopen, $output);
-			closef($fileopen);
-
-		}
-	}
-}
-				
-
-
-
-
-alias saveoutput {
-
-	$bid = $1;
-	$file = $2;
-	$module = $3;
-	$command = $4;
-	$optional_arguments = $5;
-
-	if ($module eq "execute-assembly"){
-
-		if (!-exists "saveoutput/"){
-			mkdir("saveoutput");
-		}
-
-		$currentdir = cwd();
-		$filepath = $currentdir."/saveoutput/".$file;
-		elog($filepath);
-		
-
-		if (-exists $filepath){
-			berror($1,"File Exists! Use another filename.");
+			}
 			
 		}
-
-
-		if (!-exists $filepath){
-			createNewFile($filepath);
-
-			prompt_confirm("Have you reload the save-output.cna script [Avoid Repetition of output] ?", "Have you?", {
-   			show_mesage("Great! Running Script!");
-   			execute-assembly($bid,$filepath,$command,$optional_arguments);
-   			});
-
-		}
-
-
-		
 	}
-
-	if ($module eq "run"){
-		if (!-exists "saveoutput/"){
-			mkdir("saveoutput");
-		}
-
-
-		$currentdir = cwd();
-		$filepath = $currentdir."/saveoutput/".$file;
-		elog($filepath);
-
-		if (-exists $filepath){
-			berror($1,"File Exists! Use another filename.");
-			
-		}
-
-
-		if (!-exists $filepath){
-			createNewFile($filepath);
-
-
-			prompt_confirm("Have you reload the save-output.cna script [Avoid Repetition of output] ?", "Have you?", {
-   			show_mesage("Great! Running Script!");
-   			run($bid,$filepath,$command,$optional_arguments);
-   			});
-			
-		}
-	
-	}
-
-	if ($module eq "shell"){
-
-		if (!-exists "saveoutput/"){
-			mkdir("saveoutput");
-		}
-
-		$currentdir = cwd();
-		$filepath = $currentdir."/saveoutput/".$file;
-		elog($filepath);
-		
-
-
-		if (-exists $filepath){
-			berror($1,"File Exists! Use another filename.");
-			
-		}
-
-
-		if (!-exists $filepath){
-			createNewFile($filepath);
-
-			prompt_confirm("Have you reload the save-output.cna script [Avoid Repetition of output] ?", "Have you?", {
-   			show_mesage("Great! Running Script!");
-   			shell($bid,$filepath,$command,$optional_arguments);
-   			});
-
-			
-		}
-
-		
-	}
-
-	if ($module eq "powerpick"){
-
-		if (!-exists "saveoutput/"){
-			mkdir("saveoutput");
-		}
-
-		$currentdir = cwd();
-		$filepath = $currentdir."/saveoutput/".$file;
-		elog($filepath);
-		
-
-
-		if (-exists $filepath){
-			berror($1,"File Exists! Use another filename.");
-			
-		}
-
-
-		if (!-exists $filepath){
-			createNewFile($filepath);
-
-			prompt_confirm("Have you reload the save-output.cna script [Avoid Repetition of output] ?", "Have you?", {
-   			show_mesage("Great! Running Script!");
-   			powerpick($bid,$filepath,$command,$optional_arguments);
-   			});
-
-			
-		}
-
-
-		
-	}
-
-	if ($module eq "powershell"){
-
-		if (!-exists "saveoutput/"){
-			mkdir("saveoutput");
-		}
-
-		$currentdir = cwd();
-		$filepath = $currentdir."/saveoutput/".$file;
-		elog($filepath);
-		
-
-
-		if (-exists $filepath){
-			berror($1,"File Exists! Use another filename.");
-			
-		}
-
-
-		if (!-exists $filepath){
-			createNewFile($filepath);
-
-			prompt_confirm("Have you reload the save-output.cna script [Avoid Repetition of output] ?", "Have you?", {
-   			show_mesage("Great! Running Script!");
-   			powershell($bid,$filepath,$command,$optional_arguments);
-   			});
-   			
-			
-		}
-
-		
-	}
-
 }
 
 
 beacon_command_register(
-   "saveoutput", 
-   "saves command output to file", 
-   "\nSupported Modules : (execute-assembly,run,shell,powerpick,powershell)\n\nUsage : saveoutput filename module command optional_arguments\n\nExamples : \n\nsaveoutput seatbelt_output.txt execute-assembly /opt/Seatbelt.exe \"-group=system\"\nsaveoutput netstat.log run net \"localgroup Administrators\"\nsaveoutput process_list.txt shell whoami \"/all\"\nsaveoutput usernames.txt powerpick Get-DomainUser\nsaveoutput jaws.txt powershell C:\\Tools\\JAWS.ps1\n");
+	"bye",
+	"Exits and Removes Beacon from Display",
+	"\nDescription : \n\nExit Session and Remove from Display"
+	);
+
 
 
 
