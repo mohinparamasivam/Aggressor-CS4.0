@@ -7,10 +7,13 @@
 #   (https://github.com/mohinparamasivam)
 
 
-alias bye {
+
+sub exit {
+
 	$bid = $1;
 	binput($bid, "exit");
 	bexit($bid);
+
 	on beacon_output {
 		$output = $2;
 
@@ -39,6 +42,19 @@ alias bye {
 		}
 	}
 }
+
+
+alias bye {
+
+	global('$bid');
+	$bid = $1;
+	prompt_confirm("Are you sure you want to kill the beacon?", "Kill Beacon?", {
+		exit($bid);
+	});
+}
+
+
+
 
 
 beacon_command_register(
