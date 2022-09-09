@@ -180,7 +180,7 @@ alias saveoutput {
 	if ($module eq "execute-assembly"){
 
 		prompt_confirm("Have you reload the save-output.cna script? [fixes repitition of output bug]", "Reload the script in Script Manager before running!", {
-   		show_mesage("Great! Running Script!");
+   		
    			
    			
 
@@ -214,7 +214,7 @@ alias saveoutput {
 
 
 		prompt_confirm("Have you reload the save-output.cna script? [fixes repitition of output bug]", "Reload the script in Script Manager before running!", {
-   		show_mesage("Great! Running Script!");
+   		
 
 			if (!-exists "saveoutput/"){
 				mkdir("saveoutput");
@@ -245,7 +245,7 @@ alias saveoutput {
 
 
 		prompt_confirm("Have you reload the save-output.cna script? [fixes repitition of output bug]", "Reload the script in Script Manager before running!", {
-   		show_mesage("Great! Running Script!");
+   		
 
 			if (!-exists "saveoutput/"){
 				mkdir("saveoutput");
@@ -276,7 +276,7 @@ alias saveoutput {
 
 
 	prompt_confirm("Have you reload the save-output.cna script? [fixes repitition of output bug]", "Reload the script in Script Manager before running!", {
-   		show_mesage("Great! Running Script!");
+   		
 
 			if (!-exists "saveoutput/"){
 				mkdir("saveoutput");
@@ -308,7 +308,7 @@ alias saveoutput {
 
 
 	prompt_confirm("Have you reload the save-output.cna script? [fixes repitition of output bug]", "Reload the script in Script Manager before running!", {
-   		show_mesage("Great! Running Script!");
+   		
 
 			if (!-exists "saveoutput/"){
 				mkdir("saveoutput");
