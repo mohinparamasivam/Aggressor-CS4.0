@@ -65,7 +65,7 @@ sub run{
 			closef($fileopen);
 
 		}
-	}
+	}		
 }
 
 
@@ -196,7 +196,12 @@ alias saveoutput {
 
 		if (!-exists $filepath){
 			createNewFile($filepath);
-			execute-assembly($bid,$filepath,$command,$optional_arguments);
+
+			prompt_confirm("Have you reload the save-output.cna script [Avoid Repetition of output] ?", "Have you?", {
+   			show_mesage("Great! Running Script!");
+   			execute-assembly($bid,$filepath,$command,$optional_arguments);
+   			});
+
 		}
 
 
@@ -221,7 +226,13 @@ alias saveoutput {
 
 		if (!-exists $filepath){
 			createNewFile($filepath);
-			run($bid,$filepath,$command,$optional_arguments);
+
+
+			prompt_confirm("Have you reload the save-output.cna script [Avoid Repetition of output] ?", "Have you?", {
+   			show_mesage("Great! Running Script!");
+   			run($bid,$filepath,$command,$optional_arguments);
+   			});
+			
 		}
 	
 	}
@@ -246,7 +257,13 @@ alias saveoutput {
 
 		if (!-exists $filepath){
 			createNewFile($filepath);
-			shell($bid,$filepath,$command,$optional_arguments);
+
+			prompt_confirm("Have you reload the save-output.cna script [Avoid Repetition of output] ?", "Have you?", {
+   			show_mesage("Great! Running Script!");
+   			shell($bid,$filepath,$command,$optional_arguments);
+   			});
+
+			
 		}
 
 		
@@ -272,7 +289,13 @@ alias saveoutput {
 
 		if (!-exists $filepath){
 			createNewFile($filepath);
-			powerpick($bid,$filepath,$command,$optional_arguments);
+
+			prompt_confirm("Have you reload the save-output.cna script [Avoid Repetition of output] ?", "Have you?", {
+   			show_mesage("Great! Running Script!");
+   			powerpick($bid,$filepath,$command,$optional_arguments);
+   			});
+
+			
 		}
 
 
@@ -299,7 +322,13 @@ alias saveoutput {
 
 		if (!-exists $filepath){
 			createNewFile($filepath);
-			powershell($bid,$filepath,$command,$optional_arguments);
+
+			prompt_confirm("Have you reload the save-output.cna script [Avoid Repetition of output] ?", "Have you?", {
+   			show_mesage("Great! Running Script!");
+   			powershell($bid,$filepath,$command,$optional_arguments);
+   			});
+   			
+			
 		}
 
 		
@@ -312,3 +341,6 @@ beacon_command_register(
    "saveoutput", 
    "saves command output to file", 
    "\nSupported Modules : (execute-assembly,run,shell,powerpick,powershell)\n\nUsage : saveoutput filename module command optional_arguments\n\nExamples : \n\nsaveoutput seatbelt_output.txt execute-assembly /opt/Seatbelt.exe \"-group=system\"\nsaveoutput netstat.log run net \"localgroup Administrators\"\nsaveoutput process_list.txt shell whoami \"/all\"\nsaveoutput usernames.txt powerpick Get-DomainUser\nsaveoutput jaws.txt powershell C:\\Tools\\JAWS.ps1\n");
+
+
+
