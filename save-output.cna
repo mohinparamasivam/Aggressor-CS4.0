@@ -169,7 +169,7 @@ sub powerpick{
 
 
 
-alias saveoutput {
+sub module-execute {
 
 	$bid = $1;
 	$file = $2;
@@ -177,164 +177,84 @@ alias saveoutput {
 	$command = $4;
 	$optional_arguments = $5;
 
-	if ($module eq "execute-assembly"){
 
-		prompt_confirm("Have you reload the save-output.cna script? [fixes repitition of output bug]", "Reload the script in Script Manager before running!", {
-   		
-   			
-   			
 
-			if (!-exists "saveoutput/"){
+	if (!-exists "saveoutput/"){
 				mkdir("saveoutput");
-			}
+	}
 
-			$currentdir = cwd();
-			$filepath = $currentdir."/saveoutput/".$file;
-			elog($filepath);
+	$currentdir = cwd();
+	$filepath = $currentdir."/saveoutput/".$file;
 			
 
-			if (-exists $filepath){
-				berror($1,"File Exists! Use another filename.");
-				
-			}
-
-
-			if (!-exists $filepath){
-				createNewFile($filepath);
-
-	   			execute-assembly($bid,$filepath,$command,$optional_arguments);
-
-			}
-
-		});
-
+	if (-exists $filepath){
+		berror($1,"File Exists! Use another filename.");
+		
 	}
 
-	if ($module eq "run"){
+
+	if (!-exists $filepath){
+		createNewFile($filepath);
+
+		if ($module eq "execute-assembly"){
+
+   			execute-assembly($bid,$filepath,$command,$optional_arguments);
+
+		}
 
 
-		prompt_confirm("Have you reload the save-output.cna script? [fixes repitition of output bug]", "Reload the script in Script Manager before running!", {
-   		
-
-			if (!-exists "saveoutput/"){
-				mkdir("saveoutput");
-			}
+		if ($module eq "run"){
+   			run($bid,$filepath,$command,$optional_arguments);
+   			
+		}
 
 
-			$currentdir = cwd();
-			$filepath = $currentdir."/saveoutput/".$file;
-			elog($filepath);
+		if ($module eq "shell"){
+   			shell($bid,$filepath,$command,$optional_arguments);
+   			
+		}
 
-			if (-exists $filepath){
-				berror($1,"File Exists! Use another filename.");
-				
-			}
+		if ($module eq "powerpick"){
+   			powerpick($bid,$filepath,$command,$optional_arguments);
+   			
+		}
 
-
-			if (!-exists $filepath){
-				createNewFile($filepath);
-	   			run($bid,$filepath,$command,$optional_arguments);
-	   			
-			}
-
-		});
-	
+		if ($module eq "powershell"){
+   			powershell($bid,$filepath,$command,$optional_arguments);
+   			
+		}
 	}
-
-	if ($module eq "shell"){
-
-
-		prompt_confirm("Have you reload the save-output.cna script? [fixes repitition of output bug]", "Reload the script in Script Manager before running!", {
-   		
-
-			if (!-exists "saveoutput/"){
-				mkdir("saveoutput");
-			}
+}
 
 
-			$currentdir = cwd();
-			$filepath = $currentdir."/saveoutput/".$file;
-			elog($filepath);
 
-			if (-exists $filepath){
-				berror($1,"File Exists! Use another filename.");
-				
-			}
+alias saveoutput {
 
+	global('$bid,$file,$module,$command,$optional_arguments');
 
-			if (!-exists $filepath){
-				createNewFile($filepath);
-	   			shell($bid,$filepath,$command,$optional_arguments);
-	   			
-			}
+	$bid = $1;
+	$file = $2;
+	$module = $3;
+	$command = $4;
+	$optional_arguments = $5;
 
-		});
-	
-	}
-
-	if ($module eq "powerpick"){
 
 
 	prompt_confirm("Have you reload the save-output.cna script? [fixes repitition of output bug]", "Reload the script in Script Manager before running!", {
-   		
 
-			if (!-exists "saveoutput/"){
-				mkdir("saveoutput");
-			}
+		module-execute($bid,$file,$module,$command,$optional_arguments);
 
-
-			$currentdir = cwd();
-			$filepath = $currentdir."/saveoutput/".$file;
-			elog($filepath);
-
-			if (-exists $filepath){
-				berror($1,"File Exists! Use another filename.");
-				
-			}
-
-
-			if (!-exists $filepath){
-				createNewFile($filepath);
-	   			powerpick($bid,$filepath,$command,$optional_arguments);
-	   			
-			}
-
-		});
-
-	}
-
-
-	if ($module eq "powershell"){
-
-
-	prompt_confirm("Have you reload the save-output.cna script? [fixes repitition of output bug]", "Reload the script in Script Manager before running!", {
-   		
-
-			if (!-exists "saveoutput/"){
-				mkdir("saveoutput");
-			}
-
-
-			$currentdir = cwd();
-			$filepath = $currentdir."/saveoutput/".$file;
-			elog($filepath);
-
-			if (-exists $filepath){
-				berror($1,"File Exists! Use another filename.");
-				
-			}
-
-
-			if (!-exists $filepath){
-				createNewFile($filepath);
-	   			powershell($bid,$filepath,$command,$optional_arguments);
-	   			
-			}
-
-		});
-	}
+	});
 
 }
+
+
+
+
+
+
+
+
 
 
 beacon_command_register(
