@@ -11,11 +11,12 @@ beacon> help bye
 
 Description : 
 
-Exit Session and Remove from Display
+Kill Beacon and Remove from Display
 
 ```
 
-
+**Example :** Notification is sent when user kills beacon<br><br>
+![Kill Beacon](https://raw.githubusercontent.com/mohinparamasivam/Aggressor-CS4.0/master/images/kill_beacon.png)<br><br>
 - **`save-output.cna`** - This script helps the operator to save long output of commands ran in the command-line. For example, the output of a program might reach the output limit of the beacon terminal or causes inconvenience to scroll to the very top to copy paste the output to a file. By using this module, the output of the command is automatically saved into the filename specified.
 
 ```
@@ -33,7 +34,9 @@ saveoutput process_list.txt shell whoami "/all"
 saveoutput usernames.txt powerpick Get-DomainUser
 saveoutput jaws.txt powershell C:\Tools\JAWS.ps1
 ```
-<br>
+#### Example : 
+![Example Usage](https://raw.githubusercontent.com/mohinparamasivam/Aggressor-CS4.0/master/images/example_saveoutput.png)
+<br><br>
 
   - **Important Note (save-output.cna) :** Operator is required to reload save-output.cna script before execution to avoid output repetition bug to occur.
 
