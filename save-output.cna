@@ -193,8 +193,7 @@ sub module-execute {
 		createNewFile($filepath);
 
 		if ($module eq "execute-assembly"){
-
-   			execute-assembly($bid,$filepath,$command,$optional_arguments);
+			execute-assembly($bid,$filepath,$command,$optional_arguments);
 
 		}
 
@@ -256,7 +255,7 @@ alias saveoutput {
 beacon_command_register(
    "saveoutput", 
    "saves command output to file", 
-   "\nSupported Modules : (execute-assembly,run,shell,powerpick,powershell)\n\nUsage : saveoutput filename module command optional_arguments\n\nExamples : \n\nsaveoutput seatbelt_output.txt execute-assembly /opt/Seatbelt.exe \"-group=system\"\nsaveoutput netstat.log run net \"localgroup Administrators\"\nsaveoutput process_list.txt shell whoami \"/all\"\nsaveoutput usernames.txt powerpick Get-DomainUser\nsaveoutput jaws.txt powershell C:\\Tools\\JAWS.ps1\n");
+   "\nSupported Modules : (execute-assembly,run,shell,powerpick,powershell)\n\nUsage : saveoutput filename module command optional_arguments\n\nExamples : \n\nsaveoutput seatbelt_output.txt execute-assembly /opt/Seatbelt.exe \"-group=system\"\nsaveoutput netlocalgroup.log run net \"localgroup Administrators\"\nsaveoutput process_list.txt shell whoami \"/all\"\nsaveoutput usernames.txt powerpick Get-DomainUser\nsaveoutput jaws.txt powershell C:\\Tools\\JAWS.ps1\n");
 
 
 
