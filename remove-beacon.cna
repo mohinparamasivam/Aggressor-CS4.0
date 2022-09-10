@@ -60,7 +60,7 @@ alias bye {
 beacon_command_register(
 	"bye",
 	"Exits and Removes Beacon from Display",
-	"\nDescription : \n\nExit Session and Remove from Display"
+	"\nDescription : \n\nKill Beacon and Remove from Display"
 	);
 
 
