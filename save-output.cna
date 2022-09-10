@@ -17,7 +17,7 @@ sub execute-assembly{
 	$print_command = "execute-assembly ".$binarypath." ".$arguments;
 
 	binput($bid,$print_command);
-	btask($1, "Saving output to $file");
+	btask($bid, "Saving output to $file");
 	bexecute_assembly($bid,$binarypath,$arguments);
 
 	
@@ -26,7 +26,6 @@ sub execute-assembly{
 		$output_check = substr($output,0,16);
 		
 		if ($output_check eq "received output:"){
-			elog($output);
 			$fileopen = openf(">>$file");
 			writeb($fileopen, $output);
 			closef($fileopen);
@@ -49,7 +48,7 @@ sub run{
 	$print_command = "run ".$final_command;
 	
 	binput($bid,$print_command);
-	btask($1, "Saving output to $file");
+	btask($bid, "Saving output to $file");
 	brun($bid,$final_command);
 
 	
@@ -59,7 +58,6 @@ sub run{
 		$output_check = substr($output,0,16);
 		
 		if ($output_check eq "received output:"){
-			elog($output);
 			$fileopen = openf(">>$file");
 			writeb($fileopen, $output);
 			closef($fileopen);
@@ -79,7 +77,7 @@ sub shell{
 	$print_command = "shell ".$final_command;
 
 	binput($bid,$print_command);
-	btask($1, "Saving output to $file");
+	btask($bid, "Saving output to $file");
 	bshell($bid,$final_command);
 
 	
@@ -90,7 +88,6 @@ sub shell{
 		$output_check = substr($output,0,16);
 		
 		if ($output_check eq "received output:"){
-			elog($output);
 			$fileopen = openf(">>$file");
 			writeb($fileopen, $output);
 			closef($fileopen);
@@ -112,7 +109,7 @@ sub powershell{
 	$print_command = "powershell ".$final_command;
 
 	binput($bid,$print_command);
-	btask($1, "Saving output to $file");
+	btask($bid, "Saving output to $file");
 	bpowershell($bid,$final_command);
 
 	
@@ -123,7 +120,6 @@ sub powershell{
 		$output_check = substr($output,0,16);
 		
 		if ($output_check eq "received output:"){
-			elog($output);
 			$fileopen = openf(">>$file");
 			writeb($fileopen, $output);
 			closef($fileopen);
@@ -145,7 +141,7 @@ sub powerpick{
 	$print_command = "powerpick ".$final_command;
 
 	binput($bid,$print_command);
-	btask($1, "Saving output to $file");
+	btask($bid, "Saving output to $file");
 	bpowerpick($bid,$final_command);
 
 	
@@ -156,7 +152,6 @@ sub powerpick{
 		$output_check = substr($output,0,16);
 		
 		if ($output_check eq "received output:"){
-			elog($output);
 			$fileopen = openf(">>$file");
 			writeb($fileopen, $output);
 			closef($fileopen);
@@ -187,8 +182,9 @@ sub module-execute {
 	$filepath = $currentdir."/saveoutput/".$file;
 			
 
+
 	if (-exists $filepath){
-		berror($1,"File Exists! Use another filename.");
+		berror($bid,"File Exists! Use another filename.");
 		
 	}
 
