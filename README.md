@@ -29,8 +29,8 @@ Usage : saveoutput filename module command optional_arguments
 Examples : 
 
 saveoutput seatbelt_output.txt execute-assembly /opt/Seatbelt.exe "-group=system"
-saveoutput netstat.log run net "localgroup Administrators"
-saveoutput process_list.txt shell whoami "/all"
+saveoutput netlocalgroup.log run net "localgroup Administrators"
+saveoutput whoami_full.txt shell whoami "/all"
 saveoutput usernames.txt powerpick Get-DomainUser
 saveoutput jaws.txt powershell C:\Tools\JAWS.ps1
 ```
