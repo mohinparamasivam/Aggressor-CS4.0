@@ -15,7 +15,7 @@ Kill Beacon and Remove from Display
 
 ```
 
-**Example :** Notification is sent when user kills beacon<br><br>
+**Example :** Notification is sent when operator kills beacon<br><br>
 ![Kill Beacon](https://raw.githubusercontent.com/mohinparamasivam/Aggressor-CS4.0/master/images/kill_beacon.png)<br><br>
 
 
