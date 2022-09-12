@@ -19,9 +19,6 @@ Kill Beacon and Remove from Display
 ![Kill Beacon](https://raw.githubusercontent.com/mohinparamasivam/Aggressor-CS4.0/master/images/kill_beacon.png)<br><br>
 
 
-
-https://user-images.githubusercontent.com/28557040/189568936-a3505727-e6a8-443b-9209-d284dc7e7e7d.mp4
-
 <br>
 
 - **`save-output.cna`** - This script helps the operator to save long output of commands ran in the command-line. For example, the output of a program might reach the output limit of the beacon terminal or causes inconvenience to scroll to the very top to copy paste the output to a file. By using this module, the output of the command is automatically saved into the filename specified.
@@ -54,9 +51,6 @@ saveoutput jaws.txt powershell C:\Tools\JAWS.ps1
 <br>
 
 ![script](https://raw.githubusercontent.com/mohinparamasivam/Aggressor-CS4.0/master/images/script.png)
-
-
-https://user-images.githubusercontent.com/28557040/189569256-8834d4e7-964d-4786-b5bd-a1bafffe4860.mp4
 
 
 
