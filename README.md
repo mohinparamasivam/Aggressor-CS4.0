@@ -22,7 +22,7 @@ Kill Beacon and Remove from Display
 
 https://user-images.githubusercontent.com/28557040/189568936-a3505727-e6a8-443b-9209-d284dc7e7e7d.mp4
 
-
+<br>
 
 - **`save-output.cna`** - This script helps the operator to save long output of commands ran in the command-line. For example, the output of a program might reach the output limit of the beacon terminal or causes inconvenience to scroll to the very top to copy paste the output to a file. By using this module, the output of the command is automatically saved into the filename specified.
 
