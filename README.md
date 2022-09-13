@@ -43,7 +43,7 @@ saveoutput usernames.txt powerpick Get-DomainUser
 saveoutput jaws.txt powershell C:\Tools\JAWS.ps1
 ```
 #### Example : 
-![Example Usage](https://raw.githubusercontent.com/mohinparamasivam/Aggressor-CS4.0/master/images/example_saveoutput.png)
+
 <br><br>
 
   - **Important Note (save-output.cna) :** Operator is required to reload save-output.cna script before execution to avoid output repetition bug to occur.
