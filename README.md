@@ -65,7 +65,9 @@ saveoutput jaws.txt powershell C:\Tools\JAWS.ps1
 
 **Walkthrough :**
 
-https://user-images.githubusercontent.com/28557040/190346747-5d7d7df3-5c57-4a34-969a-0a0aaaeb32e7.mp4
+
+https://user-images.githubusercontent.com/28557040/190366959-3e620756-41a6-4a39-b8b2-39b1beca96ef.mp4
+
 
 
 
